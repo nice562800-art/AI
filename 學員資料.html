@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AI課程學員介紹</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        padding: 40px 20px;
+        font-family: "Microsoft JhengHei", "Noto Sans TC", sans-serif;
+        background: #f5f7fa;
+        color: #333;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 36px;
+        margin-bottom: 10px;
+    }
+
+    .subtitle {
+        text-align: center;
+        color: #777;
+        margin-bottom: 35px;
+    }
+
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 22px;
+    }
+
+    .card {
+        background: white;
+        border-radius: 18px;
+        padding: 24px;
+        box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+        transition: transform 0.25s, box-shadow 0.25s;
+        position: relative;
+    }
+
+    .card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.13);
+    }
+
+    .number {
+        position: absolute;
+        top: 18px;
+        right: 20px;
+        font-size: 14px;
+        color: #999;
+    }
+
+    .name {
+        font-size: 25px;
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+
+    .age {
+        font-size: 17px;
+        color: #666;
+        margin-bottom: 12px;
+    }
+
+    .tag {
+        display: inline-block;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+
+    .new {
+        background: #e6f7ed;
+        color: #16834b;
+    }
+
+    .old {
+        background: #e8f1ff;
+        color: #2468b4;
+    }
+
+    .background {
+        line-height: 1.7;
+        margin-bottom: 15px;
+    }
+
+    .highlight {
+        background: #fff8e6;
+        border-left: 4px solid #f0b429;
+        padding: 12px;
+        border-radius: 8px;
+        line-height: 1.7;
+    }
+
+    .highlight strong {
+        display: block;
+        margin-bottom: 4px;
+    }
+
+    @media (max-width: 600px) {
+        body {
+            padding: 25px 15px;
+        }
+
+        h1 {
+            font-size: 28px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>AI 課程學員介紹</h1>
+    <div class="subtitle">彰化社區大學｜一起學習 AI、一起跟上新時代</div>
+
+    <div class="cards" id="studentCards"></div>
+
+</div>
+
+<script>
+
+const students = [
+    {no:1, name:"王麗珠", age:68, type:"舊學員",
+     bg:"已上課很多期；今天有事請假",
+     highlight:"為了學 AI 持續回到社大學習"},
+
+    {no:2, name:"林雅慧", age:53, type:"舊學員",
+     bg:"第2次上課",
+     highlight:"上學期缺課較多，這學期再來學一次"},
+
+    {no:3, name:"許芳榛", age:47, type:"舊學員",
+     bg:"第3次上課",
+     highlight:"希望將 AI 運用在工作上"},
+
+    {no:4, name:"曾玉美", age:64, type:"舊學員",
+     bg:"第2次上課",
+     highlight:"因有事已向老師請假一個月"},
+
+    {no:5, name:"黃鳳庭", age:56, type:"舊學員",
+     bg:"已上課多次",
+     highlight:"週六來「湊人氣」，提升電腦學習力"},
+
+    {no:6, name:"王淑貞", age:52, type:"舊學員",
+     bg:"第2次上課",
+     highlight:"想過一個充實的週六"},
+
+    {no:7, name:"黃秋香", age:70, type:"舊學員",
+     bg:"第3次來社大上課",
+     highlight:"持續學習 AI，活到老學到老"},
+
+    {no:8, name:"林麗華", age:70, type:"舊學員",
+     bg:"假日希望接觸新事物",
+     highlight:"學新東西，也想交年輕朋友"},
+
+    {no:9, name:"鄭健彰", age:65, type:"舊學員",
+     bg:"第2次上課",
+     highlight:"想長知識、追上世界潮流"},
+
+    {no:10, name:"楊秀姝", age:67, type:"舊學員",
+     bg:"持續上課",
+     highlight:"喜歡課堂氛圍，繼續溫故知新"},
+
+    {no:11, name:"—", age:"—", type:"—",
+     bg:"未提供資料",
+     highlight:"—"},
+
+    {no:12, name:"林筱雲", age:26, type:"舊學員",
+     bg:"第2次上課",
+     highlight:"課程先進、老師細心，還有熱心姐姐協助"},
+
+    {no:13, name:"林奕儒", age:61, type:"新學員",
+     bg:"第1次上課",
+     highlight:"利用週六下午增加 AI 能力"},
+
+    {no:14, name:"—", age:"—", type:"—",
+     bg:"未提供資料",
+     highlight:"—"},
+
+    {no:15, name:"許惠", age:69, type:"新學員",
+     bg:"第1次上課",
+     highlight:"已經會用 AI，希望再深入學習"},
+
+    {no:16, name:"粘麗莉", age:63, type:"新學員",
+     bg:"初次來社大上課",
+     highlight:"希望將 AI 帶入生活"},
+
+    {no:17, name:"莊欽章", age:62, type:"新學員",
+     bg:"第1次上課",
+     highlight:"利用時間空檔學 AI"},
+
+    {no:18, name:"施惠蓁", age:58, type:"新學員",
+     bg:"第1次來社大",
+     highlight:"想學習 AI，所以來社大上課"},
+
+    {no:19, name:"曾昭銘", age:65, type:"新學員",
+     bg:"第1次上課",
+     highlight:"想深入了解 AI 的難度與廣度，也期待同學交流"},
+
+    {no:20, name:"廖德昭", age:75, type:"新學員",
+     bg:"參加過2次 AI 課程",
+     highlight:"重修是為了「喚起學習記憶」"},
+
+    {no:21, name:"李森平", age:67, type:"新學員",
+     bg:"第1次上課；退休",
+     highlight:"退休後利用時間學習新知"},
+
+    {no:22, name:"陸曉蘭", age:37, type:"新學員",
+     bg:"第1次上課",
+     highlight:"希望認識 AI 並應用到生活"},
+
+    {no:23, name:"林科鋐", age:19, type:"新學員",
+     bg:"第1次上課",
+     highlight:"怕媽媽一個人上課無聊，所以陪媽媽來"},
+
+    {no:24, name:"高士弘", age:50, type:"新學員",
+     bg:"第1次上課",
+     highlight:"週六下午在家無聊，選擇來學習"},
+
+    {no:25, name:"施慧玲", age:62, type:"新學員",
+     bg:"第1次上課",
+     highlight:"利用週六下午培養新興趣"},
+
+    {no:26, name:"孫連雲", age:67, type:"新學員",
+     bg:"第1次上 AI 課",
+     highlight:"羨慕同學用 AI 生成圖片、影片，希望自己也學會"},
+
+    {no:27, name:"葉麗美", age:70, type:"新學員",
+     bg:"第1次學 AI",
+     highlight:"想學會如何把 AI 應用到生活中"}
+];
+
+const container = document.getElementById("studentCards");
+
+students.forEach(student => {
+
+    let tagClass =
+        student.type === "新學員" ? "new" :
+        student.type === "舊學員" ? "old" : "";
+
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+        <div class="number">NO. ${student.no}</div>
+
+        <div class="name">${student.name}</div>
+
+        <div class="age">年齡：${student.age}</div>
+
+        <div class="tag ${tagClass}">
+            ${student.type}
+        </div>
+
+        <div class="background">
+            <strong>學習背景：</strong><br>
+            ${student.bg}
+        </div>
+
+        <div class="highlight">
+            <strong>✨ 印象深刻</strong>
+            ${student.highlight}
+        </div>
+    `;
+
+    container.appendChild(card);
+});
+
+</script>
+
+</body>
+</html>
